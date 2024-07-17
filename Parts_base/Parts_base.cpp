@@ -91,7 +91,7 @@ char receive_char(char error_char) {
 	else return error_char;
 }
 
-String receive(char terminal_char) {
+String receive_String(char terminal_char) {
 	String result = "";
 	if ( !(Serial.available()) ) return result;
 	while (true) {
