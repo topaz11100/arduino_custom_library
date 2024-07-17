@@ -102,3 +102,18 @@ String receive_String(char terminal_char) {
 	}
 	return result;
 }
+
+void Strip::decomposition(String str) {
+	int* interval = new int[sep_count];
+	int mark = 0;
+	for (int i = 0; i < sep_count; i += 1) {
+		interval[i] = str.indexOf(sep, mark);
+		mark = interval[i] + 1;
+	}
+	s[0] = str.substring(0, interval[0]);
+	for (int i = 1; i < sep_count; i += 1) {
+		s[i] = str.substring(interval[i - 1] + 1, interval[i]);
+	}
+	s[sep_count] = str.substring(interval[sep_count - 1] + 1);
+	delete[] interval;
+}

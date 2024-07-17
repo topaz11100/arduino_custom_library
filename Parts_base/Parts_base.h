@@ -49,4 +49,16 @@ char receive_char(char error_char);
 
 String receive_String(char terminal_char);
 
+class Strip {
+public:
+    Strip(char c, int n) :s{ new String[n + 1] }, sep{ c }, sep_count{ n } {}
+    void decomposition(String str);
+    const String& operator[](int n) { return s[n]; }
+    ~Strip() { delete[] s; }
+private:
+    String* s;
+    char sep;
+    int sep_count;
+};
+
 #endif
