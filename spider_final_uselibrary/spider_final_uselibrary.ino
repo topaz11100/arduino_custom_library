@@ -2,6 +2,7 @@
 
 Servo_vector spider{8};
 const int spider_pin[8] = {4,5,6,7,8,9,10,11};
+
 Servo turret;
 
 Ultrasonic hc06;
@@ -12,7 +13,6 @@ const int speed = 500;
 // limit[위치][모드] = {{앞쪽/서는방향한계, 뒤쪽/눕는방향한계}...}
 const int limit[8][2] = { {0, 155}, {30, 180}, {150, 0}, {180, 30},
 	                        {180 , 90}, {0, 90}, {180, 90}, {0, 90} };
-// 발의경우 뒷 원소 밖의 범위는 올라오는 각도이다
 
 void setup() {
   Serial.begin(9600);
@@ -142,7 +142,7 @@ float find_far(){
 
 void avoid_walk(float s){
   walk();
-  if( hc06.distance() < s ) return;
+  if( hc06.distance() > s ) return;
   float temp = find_far();
   int n = 1;
   while (true){
