@@ -1,5 +1,5 @@
-#ifndef Servo_Vector_h
-#define Servo_Vector_h
+#ifndef Servo_vector_h
+#define Servo_vector_h
 
 #include "Arduino.h"
 #include "Servo.h"
