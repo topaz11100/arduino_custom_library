@@ -12,6 +12,7 @@ public:
     Protocol(char c, int n) :s{ new String[n] }, sep{ c }, sep_count{ n - 1 } {}
     void strip(const String& str);
     const String& operator[](int n) { return s[n]; }
+    void fillintarr(int arr[]);
     ~Protocol() { delete[] s; }
 private:
     String* s;

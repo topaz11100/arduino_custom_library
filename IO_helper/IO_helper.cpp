@@ -38,3 +38,11 @@ void Protocol::strip(const String& str)
 	s[sep_count] = str.substring(interval[sep_count - 1] + 1);
 	delete[] interval;
 }
+
+void Protocol::fillintarr(int arr[])
+{
+	for (int i = 0; i <= sep_count; i += 1)
+	{
+		arr[i] = s[i].toInt();
+	}
+}
