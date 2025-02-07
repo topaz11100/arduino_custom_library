@@ -3,11 +3,12 @@
 void Joystick::init(int x, int y, int z, int s)
 {
 	xPin = y;
-	yPin = x;
-	zPin = z;
 	pinMode(xPin, INPUT);
+
+	yPin = x;
 	pinMode(yPin, INPUT);
-	pinMode(zPin, INPUT_PULLUP);
+	
+	Z.init(z);
 	sense = s;
 }
 
@@ -30,9 +31,10 @@ int Joystick::y_triread()
 void Ultrasonic::init(int trig, int echo)
 {
 	trigPin = trig;
+	pinMode(trigPin, OUTPUT);
+
 	echoPin = echo;
 	pinMode(echoPin, INPUT);
-	pinMode(trigPin, OUTPUT);
 }
 
 float Ultrasonic::distance()
@@ -43,4 +45,31 @@ float Ultrasonic::distance()
 	long duration = pulseIn(echoPin, HIGH);
 	float result = ((float)(340 * duration) / 1000) / 2;
 	return result;
+}
+
+void Dcmotor::init(int fPin, int bPin)
+{
+	frontPin = fPin;
+	pinMode(fPin, OUTPUT);
+
+	backPin = bPin;
+	pinMode(bPin, OUTPUT);
+}
+
+void Dcmotor::front()
+{
+	digitalWrite(frontPin, HIGH);
+	digitalWrite(backPin, LOW);
+}
+
+void Dcmotor::back()
+{
+	digitalWrite(frontPin, LOW);
+	digitalWrite(backPin, HIGH);
+}
+
+void Dcmotor::stop()
+{
+	digitalWrite(frontPin, LOW);
+	digitalWrite(backPin, LOW);
 }

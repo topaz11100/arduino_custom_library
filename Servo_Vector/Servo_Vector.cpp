@@ -24,7 +24,7 @@ void Servo_vector::move_arr(int angle[], int speed)
 		for (int i = 0; i < size; i += 1)
 		{
 			int temp = sv[i].read();
-			if (temp > angle[i])      sv[i].write(temp - 1);
+			if		(temp > angle[i]) sv[i].write(temp - 1);
 			else if (temp < angle[i]) sv[i].write(temp + 1);
 		}
 		delayMicroseconds(speed);

@@ -9,7 +9,7 @@ public:
     void init(int p) { pin = p; pinMode(p, INPUT_PULLUP); }
 
     bool is_pushed() { return !digitalRead(pin); }
-    void button_neutral() { while (true) { if (!is_pushed()) return; } }
+    void blocking_neutral() { while (true) { if (!is_pushed()) return; } }
 private:
     int pin;
 };
@@ -26,14 +26,14 @@ public:
     int y_read() { return 1023 - analogRead(yPin); }
     int y_triread();
 
-    bool z_read() { return !digitalRead(zPin); }
+    bool z_read() { return Z.is_pushed(); }
 
     bool is_zero() { return !(x_triread() || y_triread() || z_read()); }
-    void joystick_neutral() { while (true) { if (is_zero()) return; } }
+    void blocking_neutral() { while (true) { if (is_zero()) return; } }
 private:
     int xPin;
     int yPin;
-    int zPin;
+    Button Z;
     int sense;
 };
 
@@ -45,6 +45,18 @@ public:
 private:
     int trigPin;
     int echoPin;
+};
+
+class Dcmotor
+{
+public:
+    void init(int fPin, int bPin);
+    void front();
+    void back();
+    void stop();
+private:
+    int frontPin;
+    int backPin;
 };
 
 #endif
