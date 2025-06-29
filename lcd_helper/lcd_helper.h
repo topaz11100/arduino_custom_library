@@ -6,7 +6,7 @@
 
 void lcd_print(LiquidCrystal_I2C& lcd, const String& str, int x, int y);
 
-//¾×Á¤Å©±â¿¡ ¸Â°Ô °ø¹éÀ» Ã¤¿öÁÖ´Â ½ºÆ®¸µÇÔ¼ö
+// ì•¡ì •í¬ê¸°ì— ë§ê²Œ ê³µë°±ì„ ì±„ì›Œì£¼ëŠ” ìŠ¤íŠ¸ë§í•¨ìˆ˜
 String make_space(const String& str, int lcd_width, int mode = 0);
 
 #endif

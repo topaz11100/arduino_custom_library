@@ -21,7 +21,7 @@ String receive_String(char terminal_char)
 
 void Protocol::strip(const String& str)
 {
-	//±¸ºĞÀÚ À§Ä¡ ¹è¿­ »ı¼º, ¹è¿­¿¡ À§Ä¡ ´ã±â
+	// êµ¬ë¶„ì ìœ„ì¹˜ ë°°ì—´ ìƒì„±, ë°°ì—´ì— ìœ„ì¹˜ ë‹´ê¸°
 	int* interval = new int[sep_count];
 	int mark = 0;
 	for (int i = 0; i < sep_count; i += 1)
@@ -29,7 +29,7 @@ void Protocol::strip(const String& str)
 		interval[i] = str.indexOf(sep, mark);
 		mark = interval[i] + 1;
 	}
-	//½ºÆ®¸µ ÇÊµå¿¡ ±¸ºĞÀÚ À§Ä¡·Î »ı¼ºÇÑ ºÎºĞ ¹®ÀÚ¿­ Ã¤¿ö³Ö±â
+	// ìŠ¤íŠ¸ë§ í•„ë“œì— êµ¬ë¶„ì ìœ„ì¹˜ë¡œ ìƒì„±í•œ ë¶€ë¶„ ë¬¸ìì—´ ì±„ì›Œë„£ê¸°
 	s[0] = str.substring(0, interval[0]);
 	for (int i = 1; i < sep_count; i += 1)
 	{

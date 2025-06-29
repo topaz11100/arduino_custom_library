@@ -1,6 +1,6 @@
-#include "Servo_vector.h"
+#include "Servo_Arr.h"
 
-void Servo_vector::attach(int pin[])
+void Servo_Arr::attach(int pin[])
 {
 	for (int i = 0; i < size; i += 1)
 	{
@@ -8,7 +8,7 @@ void Servo_vector::attach(int pin[])
 	}
 }
 
-bool Servo_vector::issame(int angle[])
+bool Servo_Arr::issame(int angle[])
 {
 	for (int i = 0; i < size; i += 1)
 	{
@@ -17,7 +17,7 @@ bool Servo_vector::issame(int angle[])
 	return true;
 }
 
-void Servo_vector::move_arr(int angle[], int speed)
+void Servo_Arr::move_arr(int angle[], int speed)
 {
 	while ( !issame(angle) )
 	{
@@ -31,7 +31,7 @@ void Servo_vector::move_arr(int angle[], int speed)
 	}
 }
 
-void Servo_vector::move_one(int n, int angle, int speed)
+void Servo_Arr::move_one(int n, int angle, int speed)
 {
 	while (true)
 	{

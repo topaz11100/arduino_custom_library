@@ -1,14 +1,14 @@
-#ifndef Servo_vector_h
-#define Servo_vector_h
+#ifndef Servo_Arr_h
+#define Servo_Arr_h
 
 #include "Arduino.h"
 #include "Servo.h"
 
-class Servo_vector
+class Servo_Arr
 {
 public:
-    Servo_vector(int s) : sv{ new Servo[s] }, size{ s } {}
-    ~Servo_vector() { delete[] sv; }
+    Servo_Arr(int s) : sv{ new Servo[s] }, size{ s } {}
+    ~Servo_Arr() { delete[] sv; }
 
     Servo& operator[](int n) { return sv[n]; }
 

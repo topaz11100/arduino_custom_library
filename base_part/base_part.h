@@ -3,6 +3,32 @@
 
 #include "Arduino.h"
 
+class Actuator
+{
+public:
+    Actuator(int p) : pin(p), status(false) {}
+    void init() { pinMode(pin, OUTPUT); }
+    void write(bool state) { digitalWrite(pin, state); status = state; }
+    bool get_status() const { return status; }
+
+private:
+    int pin;
+    bool status;
+};
+
+class AnalogSensor
+{
+public:
+    AnalogSensor(int p, int t) : pin(p), threshold(t) {}
+    int read() { return analogRead(pin); }
+    bool trigger() { return read() >= threshold; }
+    void set_thre(int new_thre) { threshold = new_thre; }
+
+private:
+    int pin;
+    int threshold;
+};
+
 class Button
 {
 public:
