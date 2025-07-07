@@ -5,15 +5,15 @@ char receive_char(char error_char)
 	if ( Serial.available() ) return Serial.read();
 	else return error_char;
 }
-String receive_String(char terminal_char)
+String receive_String(char terminal_char, char error_char = '?')
 {
 	String result = "";
 	if ( !(Serial.available()) ) return result;
 	while (true)
 	{
-		char temp = receive_char('?');
+		char temp = receive_char(error_char);
 		if (temp == terminal_char) break;
-		if (temp == '?') continue;
+		if (temp == error_char)    continue;
 		result += String(temp);
 	}
 	return result;
