@@ -1,4 +1,4 @@
-#include "base_part.h"
+#include "base_part.hpp"
 
 void Joystick::init(int x, int y, int z, int s)
 {

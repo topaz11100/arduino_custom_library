@@ -1,4 +1,4 @@
-#include "Servo_Arr.h"
+#include "Servo_Arr.hpp"
 
 void Servo_Arr::attach(int pin[])
 {

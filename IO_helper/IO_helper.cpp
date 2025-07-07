@@ -1,4 +1,4 @@
-#include "IO_helper.h"
+#include "IO_helper.hpp"
 
 char receive_char(char error_char)
 {
@@ -19,30 +19,34 @@ String receive_String(char terminal_char, char error_char = '?')
 	return result;
 }
 
-void Protocol::strip(const String& str)
+bool Protocol::receive(String& input)
 {
-	// 구분자 위치 배열 생성, 배열에 위치 담기
-	int* interval = new int[sep_count];
-	int mark = 0;
-	for (int i = 0; i < sep_count; i += 1)
+	const int limit = input.length();
+	int idx = 0;
+	for (int i = 0; i < size; i += 1)
 	{
-		interval[i] = str.indexOf(sep, mark);
-		mark = interval[i] + 1;
+		//이전 내용 초기화
+		str_arr[i] = "";
+
+		//구분자 전 까지는 채우기
+		while (input[idx] != sep)
+		{
+			str_arr[i] += input[idx];
+			idx += 1;
+			// 여기 걸리면 형식 안맞는 문자열
+			if (idx >= limit) return false;
+		}
+		//구분자는 넘어가기
+		idx += 1;
 	}
-	// 스트링 필드에 구분자 위치로 생성한 부분 문자열 채워넣기
-	s[0] = str.substring(0, interval[0]);
-	for (int i = 1; i < sep_count; i += 1)
-	{
-		s[i] = str.substring(interval[i - 1] + 1, interval[i]);
-	}
-	s[sep_count] = str.substring(interval[sep_count - 1] + 1);
-	delete[] interval;
+	// 성공
+	return true;
 }
 
-void Protocol::fillintarr(int arr[])
+void Protocol::store_int_arr(int target[])
 {
-	for (int i = 0; i <= sep_count; i += 1)
+	for (int i = 0; i < size; i += 1)
 	{
-		arr[i] = s[i].toInt();
+		target[i] = str_arr[i].toInt();
 	}
 }

@@ -1,4 +1,4 @@
-#include "lcd_helper.h"
+#include "lcd_helper.hpp"
 
 void lcd_print(LiquidCrystal_I2C& lcd, const String& str, int x, int y)
 {
