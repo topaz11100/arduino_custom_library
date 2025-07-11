@@ -1,41 +1,44 @@
 #include "IO_helper.hpp"
 
-void Ser::flush()
+namespace Rx
 {
-	while (ser.available())
-		ser.read();
-}
-
-char Ser::recv_char(char empty = '?', bool do_flush = false)
-{
-	if (ser.available())
-		empty = ser.read();
-	if (do_flush)
-		flush();
-	return empty;
-}
-
-String Ser::recv_str(char end = '\n', char empty = '?', bool do_flush = true)
-{
-	String result = "";
-
-	if (!ser.available()) return result;
-
-	while (true)
+	void flush()
 	{
-		char temp = recv_char(empty, false);
-		if (temp == empty) continue;
-		if (temp == end)   break;
-		result += temp;
+		while (Serial.available())
+			Serial.read();
 	}
 
-	if (do_flush)
-		flush();
+	char r_char(char empty = '?', bool do_flush = false)
+	{
+		if (Serial.available())
+			empty = Serial.read();
+		if (do_flush)
+			flush();
+		return empty;
+	}
 
-	return result;
+	String r_str(char end = '\n', char empty = '?', bool do_flush = true)
+	{
+		String result = "";
+
+		if (!Serial.available()) return result;
+
+		while (true)
+		{
+			char temp = r_char(empty, false);
+			if (temp == empty) continue;
+			if (temp == end)   break;
+			result += temp;
+		}
+
+		if (do_flush)
+			flush();
+
+		return result;
+	}
 }
 
-bool Protocol::receive(String& input)
+bool Protocol::recv(String& input)
 {
 	/*
 	문자열을 받아 형식에 맞으면 내부 배열에 저장 && true 반환

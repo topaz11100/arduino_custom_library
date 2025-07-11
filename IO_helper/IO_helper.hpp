@@ -3,50 +3,48 @@
 
 #include "Arduino.h"
 
-class Ser
+namespace Rx
 {
-public:
-    Ser() : ser{Serial} {}
-
-    void begin(int boud) { ser.begin(boud); }
-
     void flush();
-    char recv_char(char empty = '?', bool do_flush = false);
-    String recv_str(char end = '\n', char empty = '?', bool do_flush = true);
+    char r_char(char empty = '?', bool do_flush = false);
+    String r_str(char end = '\n', char empty = '?', bool do_flush = true);
+}
 
-private:
-    HardwareSerial &ser;
-};
-
-class Log
+namespace Log
 {
-public:
-    Log() : ser{Serial} {}
-
-    template <class STRINGABLE>
-    void var(const String &name, const STRINGABLE &var)
+    template <class STR_ABLE>
+    void var(const String& name, const STR_ABLE& var)
     {
-        ser.print(name + " : ");
-
-        ser.print(String(var));
-
-        ser.println();
+        Serial.print(name + " : ");
+        Serial.print(String(var));
+        Serial.println();
     }
 
-    template <class STRINGABLE>
-    void arr(const String &name, const STRINGABLE arr[], int size)
+    // vars base case (재귀 끝)
+    inline void vars(const String name[])
     {
-        ser.print(name + " : ");
+        Serial.println();
+    }
 
+    // cpp 재귀 Variadic Templates 이용 recursive case
+    template <typename STR_ABLE, typename... STR_ABLES>
+    void vars(const String name[], const STR_ABLE& var, const STR_ABLES& ...rest)
+    {
+        Serial.print(name[0] + " : ");
+        Serial.print(String(var) + " / ");
+
+        vars(name + 1, rest...);
+    }
+
+    template <class STR_ABLE>
+    void arr(const String& name, const STR_ABLE arr[], int size)
+    {
+        Serial.print(name + " : ");
         for (int i = 0; i < size; i += 1)
-            ser.print(String(arr[i]) + "/");
-
-        ser.println();
+            Serial.print(String(arr[i]) + " / ");
+        Serial.println();
     }
-
-private:
-    HardwareSerial &ser;
-};
+}
 
 class Protocol
 {
@@ -68,7 +66,7 @@ public:
 
     const String& operator[](int n) const { return str_arr[n]; }
 
-    bool receive(String& input);
+    bool recv(String& input);
     void store_int_arr(int target[]);
 private:
     String* str_arr;
